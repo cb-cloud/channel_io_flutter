@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 class ChannelIoFlutter {
   static const MethodChannel _channel =
       const MethodChannel('com.cbcloud/channel_io_flutter');
+  static const EventChannel _unreadChannel =
+      const EventChannel('com.cbcloud/channel_io_flutter/unread');
 
   static Future<String> get platformVersion async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
@@ -80,5 +82,41 @@ class ChannelIoFlutter {
     return _channel.invokeMethod('setDebugMode', {
       'flag': flag,
     });
+  }
+
+  static Future<bool> initPushToken({
+    @required String deviceToken,
+  }) {
+    return _channel.invokeMethod('initPushToken', {
+      'deviceToken': deviceToken,
+    });
+  }
+
+  static Future<bool> isChannelPushNotification({
+    @required Map<String, dynamic> content,
+  }) {
+    return _channel.invokeMethod('isChannelPushNotification', {
+      'content': content,
+    });
+  }
+
+  static Future<bool> receivePushNotification({
+    @required Map<String, dynamic> content,
+  }) {
+    return _channel.invokeMethod('receivePushNotification', {
+      'content': content,
+    });
+  }
+
+  static Future<bool> hasStoredPushNotification() {
+    return _channel.invokeMethod('hasStoredPushNotification');
+  }
+
+  static Future<bool> openStoredPushNotification() {
+    return _channel.invokeMethod('openStoredPushNotification');
+  }
+
+  static Stream<dynamic> getUnreadStream() {
+    return _unreadChannel.receiveBroadcastStream();
   }
 }
