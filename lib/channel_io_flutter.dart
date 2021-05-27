@@ -28,36 +28,18 @@ class ChannelIoFlutter {
     Map<String, dynamic> bootConfig = {
       'pluginKey': pluginKey,
     };
-    if (memberHash != null) {
-      bootConfig['memberHash'] = memberHash;
-    }
-    if (memberId != null) {
-      bootConfig['memberId'] = memberId;
-    }
-    if (name != null) {
-      bootConfig['name'] = name;
-    }
-    if (avatarUrl != null) {
-      bootConfig['avatarUrl'] = avatarUrl;
-    }
-    if (email != null) {
-      bootConfig['email'] = email;
-    }
-    if (mobileNumber != null) {
-      bootConfig['mobileNumber'] = mobileNumber;
-    }
-    if (language != null) {
-      bootConfig['language'] = language;
-    }
-    if (unsubscribed != null) {
-      bootConfig['unsubscribed'] = unsubscribed;
-    }
-    if (trackDefaultEvent != null) {
-      bootConfig['trackDefaultEvent'] = trackDefaultEvent;
-    }
-    if (hidePopup != null) {
-      bootConfig['hidePopup'] = hidePopup;
-    }
+    bootConfig['memberHash'] = memberHash;
+    bootConfig['memberId'] = memberId;
+    bootConfig['name'] = name;
+    bootConfig['avatarUrl'] = avatarUrl;
+    bootConfig['email'] = email;
+    bootConfig['mobileNumber'] = mobileNumber;
+    bootConfig['language'] = language;
+    bootConfig['unsubscribed'] = unsubscribed;
+    bootConfig['trackDefaultEvent'] = trackDefaultEvent;
+    bootConfig['hidePopup'] = hidePopup;
+
+    bootConfig.removeWhere((_, value) => value == null);
 
     return _channel.invokeMethod('boot', bootConfig);
   }
