@@ -2,6 +2,8 @@
 
 A new flutter plugin project.
 
+Now under development 💻
+
 ## Getting Started
 
 This project is a starting point for a Flutter
