@@ -1,9 +1,8 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-
-import 'package:flutter/services.dart';
 import 'package:channel_io_flutter/channel_io_flutter.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(MaterialApp(home: MyApp()));
@@ -84,6 +83,20 @@ class _MyAppState extends State<MyApp> {
                   );
                 },
                 child: Text('boot'),
+              ),
+              RaisedButton(
+                onPressed: () async {
+                  try {
+                    final result = await ChannelIoFlutter.shutdown();
+
+                    _showMessageDialog('Result: $result');
+                  } on PlatformException catch (error) {
+                    _showMessageDialog('PlatformException: ${error.message}');
+                  } catch (err) {
+                    _showMessageDialog(err.message);
+                  }
+                },
+                child: Text('shutdown'),
               ),
               RaisedButton(
                 onPressed: () async {
