@@ -4,6 +4,8 @@ import ChannelIO
 
 public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
     
+    public static let channelIoFlutterPluginHandler = SwiftChannelIoFlutterPluginHandler()
+
     public func application(_ application: UIApplication,
                               didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         ChannelIO.initPushToken(deviceToken: deviceToken)
@@ -29,8 +31,7 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
         registrar.addApplicationDelegate(plugin)
         
         let unreadEventChannel = FlutterEventChannel(name: "com.cbcloud/channel_io_flutter/unread", binaryMessenger: registrar.messenger())
-        let handler = SwiftChannelIoFlutterPluginHandler()
-        unreadEventChannel.setStreamHandler(handler)
+        unreadEventChannel.setStreamHandler(channelIoFlutterPluginHandler)
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -106,6 +107,7 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
         
         ChannelIO.boot(with: bootConfig) { (completion, user) in
             if completion == .success, let _ = user {
+                ChannelIO.delegate = SwiftChannelIoFlutterPlugin.channelIoFlutterPluginHandler
                 result(true)
             } else {
                 result(false)
