@@ -11,12 +11,7 @@ import ChannelIO
 
 public class SwiftChannelIoFlutterPluginHandler: NSObject, ChannelPluginDelegate {
     
-    public override init() {
-        super.init()
-        ChannelIO.delegate = self
-    }
-    
-    var eventSink: FlutterEventSink?
+    private var eventSink: FlutterEventSink?
     
     public func onUrlClicked(url: URL) -> Bool {
         return false
