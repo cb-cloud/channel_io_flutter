@@ -1,18 +1,33 @@
 # channel_io_flutter
+Channel Talk Flutter Plugin.
 
-A new flutter plugin project.
+## Installation
+```yaml
+dependencies:
+    channel_io_flutter:
+        git:
+            url: https://github.com/cb-cloud/channel_io_flutter.git
+            ref: main
+```
+### iOS
+```pod
+target 'Runner' do
+  use_frameworks!
+  use_modular_headers!
+  # Add line
+  pod 'ChannelIOSDK', podspec: 'https://mobile-static.channel.io/ios/latest/xcframework.podspec'
+  flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+end
+```
 
-Now under development 💻
+### Android
+hoge
 
-## Getting Started
+## Usage
+```dart
+import 'package:channel_io_flutter/channel_io_flutter.dart';
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-# channel_io_flutter
+void main() async {
+    await ChannelIoFlutter.boot(pluginKey: 'pluginKey');
+}
+```
