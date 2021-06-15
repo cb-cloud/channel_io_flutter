@@ -1,7 +1,8 @@
 # channel_io_flutter
-Channel Talk Flutter Plugin.
+Channel Talk Flutter Plugin.（Unofficial）
 
 ## Installation
+Add channel_io_flutter Plugin to pubspec.yaml.
 ```yaml
 dependencies:
     channel_io_flutter:
@@ -10,6 +11,7 @@ dependencies:
             ref: main
 ```
 ### iOS
+Add pod installation to ios/Podfile.
 ```pod
 target 'Runner' do
   use_frameworks!
@@ -21,13 +23,31 @@ end
 ```
 
 ### Android
-hoge
+TODO
 
 ## Usage
 ```dart
 import 'package:channel_io_flutter/channel_io_flutter.dart';
+import 'package:flutter/material.dart';
 
 void main() async {
-    await ChannelIoFlutter.boot(pluginKey: 'pluginKey');
+  WidgetsFlutterBinding.ensureInitialized();
+  await ChannelIoFlutter.boot(pluginKey: 'pluginKey');
+  runApp(MaterialApp(home: MyApp()));
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: FloatingActionButton(
+          onPressed: () async {
+            await ChannelIoFlutter.showMessenger();
+          },
+        ),
+      ),
+    );
+  }
 }
 ```
