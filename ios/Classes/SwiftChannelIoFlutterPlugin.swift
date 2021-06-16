@@ -6,17 +6,13 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
     
     public static let channelIoFlutterPluginHandler = SwiftChannelIoFlutterPluginHandler()
 
-    public func application(_ application: UIApplication,
-                              didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        ChannelIO.initPushToken(deviceToken: deviceToken)
-    }
-
     enum CallMethod: String {
         case boot
         case shutdown
         case showMessenger
         case isBooted
         case setDebugMode
+        case initPushToken
         case isChannelPushNotification
         case receivePushNotification
         case storePushNotification
@@ -46,6 +42,8 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
             isBooted(call, result)
         case .setDebugMode:
             setDebugMode(call, result)
+        case .initPushToken:
+            initPushToken(call, result)
         case .isChannelPushNotification:
             isChannelPushNotification(call, result)
         case .receivePushNotification:
@@ -138,6 +136,17 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
         
         ChannelIO.setDebugMode(with: flag)
         result(true)
+    }
+    
+    private func initPushToken(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+      guard let argMaps = call.arguments as? Dictionary<String, Any>,
+        let deviceToken = argMaps["deviceToken"] as? String else {
+        result(FlutterError(code: call.method, message: "Missing argument", details: nil))
+        return
+      }
+      
+      ChannelIO.initPushToken(tokenString: deviceToken)
+      result(true)
     }
     
     private func isChannelPushNotification(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
