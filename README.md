@@ -23,7 +23,19 @@ end
 ```
 
 ### Android
-TODO
+1. Implement firebase_messaging and make sure it works: https://pub.dev/packages/firebase_messaging#android-integration
+2. Add the Firebase server key to Channel Talk: https://developers.channel.io/docs/android-push-notification
+3. Add the following to your AndroidManifest.xml file.
+```xml
+<service
+    android:name="com.cbcloud.channel_io_flutter.PushInterceptService"
+    android:enabled="true"
+    android:exported="true">
+    <intent-filter>
+      <action android:name="com.google.firebase.MESSAGING_EVENT" />
+    </intent-filter>
+</service>
+```
 
 ## Usage
 ```dart
