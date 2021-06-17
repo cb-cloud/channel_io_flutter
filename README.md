@@ -1,18 +1,65 @@
 # channel_io_flutter
+Channel Talk Flutter Plugin.（Unofficial）
 
-A new flutter plugin project.
+## Installation
+Add channel_io_flutter Plugin to pubspec.yaml.
+```yaml
+dependencies:
+    channel_io_flutter:
+        git:
+            url: https://github.com/cb-cloud/channel_io_flutter.git
+            ref: main
+```
+### iOS
+Add pod installation to ios/Podfile.
+```pod
+target 'Runner' do
+  use_frameworks!
+  use_modular_headers!
+  # Add line
+  pod 'ChannelIOSDK', podspec: 'https://mobile-static.channel.io/ios/latest/xcframework.podspec'
+  flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+end
+```
 
-Now under development 💻
+### Android
+1. Implement firebase_messaging and make sure it works: https://pub.dev/packages/firebase_messaging#android-integration
+2. Add the Firebase server key to Channel Talk: https://developers.channel.io/docs/android-push-notification
+3. Add the following to your AndroidManifest.xml file.
+```xml
+<service
+    android:name="com.cbcloud.channel_io_flutter.PushInterceptService"
+    android:enabled="true"
+    android:exported="true">
+    <intent-filter>
+      <action android:name="com.google.firebase.MESSAGING_EVENT" />
+    </intent-filter>
+</service>
+```
 
-## Getting Started
+## Usage
+```dart
+import 'package:channel_io_flutter/channel_io_flutter.dart';
+import 'package:flutter/material.dart';
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await ChannelIoFlutter.boot(pluginKey: 'pluginKey');
+  runApp(MaterialApp(home: MyApp()));
+}
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-# channel_io_flutter
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: FloatingActionButton(
+          onPressed: () async {
+            await ChannelIoFlutter.showMessenger();
+          },
+        ),
+      ),
+    );
+  }
+}
+```
