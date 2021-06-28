@@ -36,7 +36,7 @@ end
     </intent-filter>
 </service>
 ```
-4. If you wish to customise the icon of notification, add an image with an identical file name to the following path:
+4. If you wish to customise the icon of notification, add an image with an identical file name to the following path: https://developers.channel.io/docs/android-push-notification#step-4-register-your-fcm-icon
 `/res/drawable/ch_push_icon.png`
 
 ## Usage
