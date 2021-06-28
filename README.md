@@ -36,6 +36,8 @@ end
     </intent-filter>
 </service>
 ```
+4. If you wish to customise the icon of notification, add an image with an identical file name to the following path:
+`/res/drawable/ch_push_icon.png`
 
 ## Usage
 ```dart
