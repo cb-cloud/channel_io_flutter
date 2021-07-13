@@ -13,11 +13,13 @@ class ChannelIoFlutterPluginListener : ChannelPluginListener, EventChannel.Strea
     // EventChannel.StreamHandler
 
     private var mEventSink: EventChannel.EventSink? = null
-    private var count = 0
+
+    fun sendBadge(p0: Int) {
+        mEventSink?.success(p0)
+    }
 
     override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
         mEventSink = events
-        mEventSink?.success(count)
     }
 
     override fun onCancel(arguments: Any?) {}
@@ -31,8 +33,7 @@ class ChannelIoFlutterPluginListener : ChannelPluginListener, EventChannel.Strea
     override fun onProfileChanged(p0: String?, p1: Any?) {}
 
     override fun onBadgeChanged(p0: Int) {
-        count = p0
-        mEventSink?.success(count)
+        mEventSink?.success(p0)
     }
 
     override fun onHideMessenger() {}
