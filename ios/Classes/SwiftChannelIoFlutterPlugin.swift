@@ -104,8 +104,9 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
         )
         
         ChannelIO.boot(with: bootConfig) { (completion, user) in
-            if completion == .success, let _ = user {
+            if completion == .success, let user = user {
                 ChannelIO.delegate = SwiftChannelIoFlutterPlugin.channelIoFlutterPluginHandler
+                SwiftChannelIoFlutterPlugin.channelIoFlutterPluginHandler.sendBadge(count: user.alert)
                 result(true)
             } else {
                 result(false)
