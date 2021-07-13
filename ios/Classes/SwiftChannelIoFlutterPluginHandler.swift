@@ -13,6 +13,10 @@ public class SwiftChannelIoFlutterPluginHandler: NSObject, ChannelPluginDelegate
     
     private var eventSink: FlutterEventSink?
     
+    public func sendBadge(count: Int) {
+        eventSink?(count)
+    }
+
     public func onUrlClicked(url: URL) -> Bool {
         return false
     }

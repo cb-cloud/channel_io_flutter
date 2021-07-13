@@ -139,6 +139,7 @@ class ChannelIoFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
           ChannelIO.openStoredPushNotification(activity)
         }
         ChannelIO.setListener(channelIoFlutterPluginListener)
+        channelIoFlutterPluginListener.sendBadge(user.alert)
         result.success(true)
       } else {
         result.error("ERROR", "Execution failed(boot)", null)
