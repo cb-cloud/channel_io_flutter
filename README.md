@@ -8,7 +8,7 @@ dependencies:
     channel_io_flutter:
         git:
             url: https://github.com/cb-cloud/channel_io_flutter.git
-            ref: main
+            ref: v0.0.2
 ```
 ### iOS
 Add pod installation to ios/Podfile.
@@ -17,7 +17,7 @@ target 'Runner' do
   use_frameworks!
   use_modular_headers!
   # Add line
-  pod 'ChannelIOSDK', podspec: 'https://mobile-static.channel.io/ios/latest/xcframework.podspec'
+  pod 'ChannelIOSDK', podspec: 'https://mobile-static.channel.io/ios/9.0.1/xcframework.podspec'
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
 ```
@@ -61,6 +61,18 @@ class MyApp extends StatelessWidget {
           },
         ),
       ),
+    );
+  }
+}
+```
+
+```dart
+class MyApp {
+  MyApp() {
+    ChannelIoFlutter.getUnreadStream().map((event) => event as int).listen(
+      (count) {
+        _unreadMessageCount = count;
+      },
     );
   }
 }
