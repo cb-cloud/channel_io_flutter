@@ -18,6 +18,7 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
         case storePushNotification
         case hasStoredPushNotification
         case openStoredPushNotification
+        case addTags
     }
 
     public static func register(with registrar: FlutterPluginRegistrar) {
@@ -54,6 +55,8 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
             hasStoredPushNotification(call, result)
         case .openStoredPushNotification:
             openStoredPushNotification(call, result)
+        case .addTags:
+            addTags(call, result)
         }
     }
     
@@ -189,5 +192,21 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
     private func openStoredPushNotification(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         ChannelIO.openStoredPushNotification()
         result(true)
+    }
+
+    private func addTags(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        guard let argMaps = call.arguments as? Dictionary<String, Any>,
+              let tags = argMaps["tags"] as? [String] else {
+            result(FlutterError(code: call.method, message: "Missing argument", details: nil))
+            return
+        }
+
+        ChannelIO.addTags(tags) { (_, user) in
+            if let _ = user {
+                result(true)
+            } else {
+                result(false)
+            }
+        }
     }
 }
