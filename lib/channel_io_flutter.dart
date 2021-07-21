@@ -98,6 +98,14 @@ class ChannelIoFlutter {
     return _channel.invokeMethod('openStoredPushNotification');
   }
 
+  static Future<bool> addTags({
+    @required List<String> tags,
+  }) {
+    return _channel.invokeMethod('addTags', {
+      'tags': tags,
+    });
+  }
+
   static Stream<dynamic> getUnreadStream() {
     return _unreadChannel.receiveBroadcastStream();
   }
