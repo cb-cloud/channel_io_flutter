@@ -47,6 +47,6 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "io.channel:plugin-android:8.4.0"
-    implementation "io.channel:plugin-android-fcm:8.4.0"
+    implementation "io.channel:plugin-android:9.0.3"
+    implementation "io.channel:plugin-android-fcm:9.0.3"
 }
