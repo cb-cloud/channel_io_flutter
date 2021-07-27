@@ -8,11 +8,14 @@ import com.zoyi.channel.plugin.android.ChannelIO
 import com.zoyi.channel.plugin.android.open.config.BootConfig
 import com.zoyi.channel.plugin.android.open.enumerate.BootStatus
 import com.zoyi.channel.plugin.android.open.model.Profile
+import com.zoyi.channel.plugin.android.open.model.User
 import com.zoyi.channel.plugin.android.open.option.Language
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
-import io.flutter.plugin.common.*
+import io.flutter.plugin.common.EventChannel
+import io.flutter.plugin.common.MethodCall
+import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
@@ -77,6 +80,9 @@ class ChannelIoFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
         "openStoredPushNotification" -> {
           openStoredPushNotification(result)
         }
+        "addTags" -> {
+          addTags(call, result)
+        }
         else -> {
           result.notImplemented()
         }
@@ -139,6 +145,7 @@ class ChannelIoFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
           ChannelIO.openStoredPushNotification(activity)
         }
         ChannelIO.setListener(channelIoFlutterPluginListener)
+        channelIoFlutterPluginListener.sendBadge(user.alert)
         result.success(true)
       } else {
         result.error("ERROR", "Execution failed(boot)", null)
@@ -224,5 +231,20 @@ class ChannelIoFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
   private fun openStoredPushNotification(result: Result) {
     ChannelIO.openStoredPushNotification(activity)
     result.success(true)
+  }
+
+  private fun addTags(call: MethodCall, result: Result) {
+    val tags = call.argument<List<String>>("tags")
+    if (tags == null || tags.isEmpty()) {
+      result.error("UNAVAILABLE", "Missing argument(tags)", null)
+      return
+    }
+    ChannelIO.addTags(tags) { e, user ->
+      if (user != null) {
+        result.success(true)
+      } else {
+        result.error("ERROR", "Execution failed(addTags)", e)
+      }
+    }
   }
 }
