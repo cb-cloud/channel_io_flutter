@@ -94,9 +94,9 @@ class ChannelIoFlutter {
   }
 
   static Future<bool> addTags({
-    @required List<String> tags,
-  }) {
-    return _channel.invokeMethod('addTags', {
+    required List<String> tags,
+  }) async {
+    return await _channel.invokeMethod('addTags', {
       'tags': tags,
     });
   }
