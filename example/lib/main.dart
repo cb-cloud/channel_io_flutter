@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
           child: ListView(
             children: <Widget>[
               SizedBox(height: 20),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () async {
                   content = '''
 {
@@ -84,7 +84,7 @@ class _MyAppState extends State<MyApp> {
                 },
                 child: Text('boot'),
               ),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () async {
                   try {
                     final result = await ChannelIoFlutter.shutdown();
@@ -98,7 +98,7 @@ class _MyAppState extends State<MyApp> {
                 },
                 child: Text('shutdown'),
               ),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () async {
                   try {
                     final result = await ChannelIoFlutter.showMessenger();
@@ -112,7 +112,7 @@ class _MyAppState extends State<MyApp> {
                 },
                 child: Text('showMessenger'),
               ),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () async {
                   try {
                     final result = await ChannelIoFlutter.isBooted();
@@ -130,7 +130,7 @@ class _MyAppState extends State<MyApp> {
                 },
                 child: Text('isBooted'),
               ),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () async {
                   content = '''
 {
@@ -173,7 +173,7 @@ class _MyAppState extends State<MyApp> {
         return AlertDialog(
           title: Text(message),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: const Text("OK"),
               onPressed: () => Navigator.pop(context),
             ),
@@ -235,7 +235,7 @@ class _MyAppState extends State<MyApp> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Expanded(
-                      child: FlatButton(
+                      child: TextButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
@@ -262,7 +262,7 @@ class _MyAppState extends State<MyApp> {
                             style: BorderStyle.solid,
                           ),
                         ),
-                        child: FlatButton(
+                        child: TextButton(
                           onPressed: () {
                             Navigator.of(context).pop();
                             if (onClick != null) {
