@@ -1,9 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:channel_io_flutter/channel_io_flutter.dart';
 
 void main() {
-  const MethodChannel channel = MethodChannel('channel_io_flutter');
+  const MethodChannel channel = MethodChannel('com.cbcloud/channel_io_flutter');
 
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -15,9 +14,5 @@ void main() {
 
   tearDown(() {
     channel.setMockMethodCallHandler(null);
-  });
-
-  test('getPlatformVersion', () async {
-    expect(await ChannelIoFlutter.platformVersion, '42');
   });
 }

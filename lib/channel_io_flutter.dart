@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 class ChannelIoFlutter {
@@ -15,18 +14,18 @@ class ChannelIoFlutter {
   }
 
   static Future<bool> boot({
-    @required String pluginKey,
-    String memberId,
-    String memberHash,
-    String name,
-    String avatarUrl,
-    String email,
-    String mobileNumber,
-    String language,
-    bool unsubscribed,
-    bool trackDefaultEvent,
-    bool hidePopup,
-  }) {
+    required String pluginKey,
+    String? memberId,
+    String? memberHash,
+    String? name,
+    String? avatarUrl,
+    String? email,
+    String? mobileNumber,
+    String? language,
+    bool? unsubscribed,
+    bool? trackDefaultEvent,
+    bool? hidePopup,
+  }) async {
     Map<String, dynamic> bootConfig = {
       'pluginKey': pluginKey,
     };
@@ -43,65 +42,61 @@ class ChannelIoFlutter {
 
     bootConfig.removeWhere((_, value) => value == null);
 
-    return _channel.invokeMethod('boot', bootConfig);
+    return await _channel.invokeMethod('boot', bootConfig);
   }
 
-  static Future<bool> shutdown() {
-    return _channel.invokeMethod('shutdown');
+  static Future<bool> shutdown() async {
+    return await _channel.invokeMethod('shutdown');
   }
 
-  static Future<bool> showMessenger() {
-    return _channel.invokeMethod('showMessenger');
+  static Future<bool> showMessenger() async {
+    return await _channel.invokeMethod('showMessenger');
   }
 
-  static Future<bool> isBooted() {
-    return _channel.invokeMethod('isBooted');
+  static Future<bool> isBooted() async {
+    return await _channel.invokeMethod('isBooted');
   }
 
-  static Future<bool> setDebugMode({
-    @required bool flag,
-  }) {
-    return _channel.invokeMethod('setDebugMode', {
+  static Future<bool> setDebugMode({required bool flag}) async {
+    return await _channel.invokeMethod('setDebugMode', {
       'flag': flag,
     });
   }
 
-  static Future<bool> initPushToken({
-    @required String deviceToken,
-  }) {
-    return _channel.invokeMethod('initPushToken', {
+  static Future<bool> initPushToken({required String deviceToken}) async {
+    return await _channel.invokeMethod('initPushToken', {
       'deviceToken': deviceToken,
     });
   }
 
   static Future<bool> isChannelPushNotification({
-    @required Map<String, dynamic> content,
-  }) {
-    return _channel.invokeMethod('isChannelPushNotification', {
+    required Map<String, dynamic> content,
+  }) async {
+    return await _channel.invokeMethod('isChannelPushNotification', {
       'content': content,
     });
   }
 
   static Future<bool> receivePushNotification({
-    @required Map<String, dynamic> content,
-  }) {
-    return _channel.invokeMethod('receivePushNotification', {
+    required Map<String, dynamic> content,
+  }) async {
+    return await _channel.invokeMethod('receivePushNotification', {
       'content': content,
     });
   }
 
-  static Future<bool> hasStoredPushNotification() {
-    return _channel.invokeMethod('hasStoredPushNotification');
+  static Future<bool> hasStoredPushNotification() async {
+    return await _channel.invokeMethod('hasStoredPushNotification');
   }
 
-  static Future<bool> openStoredPushNotification() {
-    return _channel.invokeMethod('openStoredPushNotification');
+  static Future<bool> openStoredPushNotification() async {
+    return await _channel.invokeMethod('openStoredPushNotification');
   }
 
   static Future<bool> addTags({
-    @required List<String> tags,
-  }) {
-    return _channel.invokeMethod('addTags', {
+    required List<String> tags,
+  }) async {
+    return await _channel.invokeMethod('addTags', {
       'tags': tags,
     });
   }
