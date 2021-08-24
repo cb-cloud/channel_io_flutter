@@ -120,6 +120,9 @@ class ChannelIoFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     call.argument<String>("mobileNumber")?.let {
       profile.setMobileNumber(it)
     }
+    call.argument<Map<String, Any>>("customAttributes")?.let {
+      it.forEach{(k, v) -> profile.setProperty(k, v) }
+    }
 
     val bootConfig = BootConfig.create(pluginKey)
             .setProfile(profile)
