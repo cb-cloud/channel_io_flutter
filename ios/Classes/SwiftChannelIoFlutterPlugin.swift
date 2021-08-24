@@ -77,6 +77,11 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
         if let mobileNumber = argMaps["mobileNumber"] as? String {
             profile.set(mobileNumber: mobileNumber)
         }
+        if let customAttributes = argMaps["customAttributes"] as? Dictionary<String, Any> {
+            customAttributes.forEach { (k, v) in
+                profile.set(propertyKey: k, value: v as AnyObject)
+            }
+        }
                 
         let memberId = argMaps["memberId"] as? String
         let memberHash = argMaps["memberHash"] as? String
