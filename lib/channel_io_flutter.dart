@@ -22,6 +22,7 @@ class ChannelIoFlutter {
     String? email,
     String? mobileNumber,
     String? language,
+    Map<String, dynamic>? customAttributes,
     bool? unsubscribed,
     bool? trackDefaultEvent,
     bool? hidePopup,
@@ -36,6 +37,7 @@ class ChannelIoFlutter {
     bootConfig['email'] = email;
     bootConfig['mobileNumber'] = mobileNumber;
     bootConfig['language'] = language;
+    bootConfig['customAttributes'] = customAttributes;
     bootConfig['unsubscribed'] = unsubscribed;
     bootConfig['trackDefaultEvent'] = trackDefaultEvent;
     bootConfig['hidePopup'] = hidePopup;
