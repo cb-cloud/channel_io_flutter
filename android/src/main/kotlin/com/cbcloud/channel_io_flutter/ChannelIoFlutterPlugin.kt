@@ -8,7 +8,6 @@ import com.zoyi.channel.plugin.android.ChannelIO
 import com.zoyi.channel.plugin.android.open.config.BootConfig
 import com.zoyi.channel.plugin.android.open.enumerate.BootStatus
 import com.zoyi.channel.plugin.android.open.model.Profile
-import com.zoyi.channel.plugin.android.open.model.User
 import com.zoyi.channel.plugin.android.open.option.Language
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -82,6 +81,15 @@ class ChannelIoFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
         }
         "addTags" -> {
           addTags(call, result)
+        }
+        "setPage" -> {
+          setPage(call, result)
+        }
+        "resetPage" -> {
+          resetPage(result)
+        }
+        "openChat" -> {
+          openChat(call, result)
         }
         else -> {
           result.notImplemented()
@@ -249,5 +257,27 @@ class ChannelIoFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
         result.error("ERROR", "Execution failed(addTags)", e)
       }
     }
+  }
+
+  private fun setPage(call: MethodCall, result: Result) {
+    val content = call.argument<String>("page")
+    if (content == null || content.isEmpty()) {
+      result.error("UNAVAILABLE", "Missing argument(content)", null)
+      return
+    }
+    ChannelIO.setPage(content)
+    result.success(true)
+  }
+
+  private fun resetPage(result: Result) {
+    ChannelIO.resetPage()
+    result.success(true)
+  }
+
+  private fun openChat(call: MethodCall, result: Result) {
+    val chatId = call.argument<String>("chatId")
+    val message = call.argument<String>("message")
+    ChannelIO.openChat(activity, chatId, message)
+    result.success(true)
   }
 }

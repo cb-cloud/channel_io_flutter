@@ -103,6 +103,26 @@ class ChannelIoFlutter {
     });
   }
 
+  static Future<bool> setPage({required String page}) async {
+    return await _channel.invokeMethod('setPage', {
+      'page': page,
+    });
+  }
+
+  static Future<bool> resetPage() async {
+    return await _channel.invokeMethod('resetPage');
+  }
+
+  static Future<bool> openChat({
+    String? chatId,
+    String? message,
+  }) async {
+    return await _channel.invokeMethod('openChat', {
+      'chatId': chatId,
+      'message': message,
+    });
+  }
+
   static Stream<dynamic> getUnreadStream() {
     return _unreadChannel.receiveBroadcastStream();
   }
