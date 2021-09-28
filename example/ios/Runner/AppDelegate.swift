@@ -1,6 +1,6 @@
 import UIKit
 import Flutter
-import ChannelIO
+import ChannelIOFront
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
