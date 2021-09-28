@@ -7,7 +7,7 @@
 
 import Flutter
 import UIKit
-import ChannelIO
+import ChannelIOFront
 
 public class SwiftChannelIoFlutterPluginHandler: NSObject, ChannelPluginDelegate {
     
