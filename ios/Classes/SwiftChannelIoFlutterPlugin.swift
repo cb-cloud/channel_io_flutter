@@ -10,6 +10,7 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
         case boot
         case shutdown
         case showMessenger
+        case hideMessenger
         case isBooted
         case setDebugMode
         case initPushToken
@@ -39,6 +40,8 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
             shutdown(call, result)
         case .showMessenger:
             showMessenger(call, result)
+        case .hideMessenger:
+            hideMessenger(call, result)
         case .isBooted:
             isBooted(call, result)
         case .setDebugMode:
@@ -129,6 +132,11 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
     
     private func showMessenger(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         ChannelIO.showMessenger()
+        result(true)
+    }
+    
+    private func hideMessenger(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        ChannelIO.hideMessenger()
         result(true)
     }
     

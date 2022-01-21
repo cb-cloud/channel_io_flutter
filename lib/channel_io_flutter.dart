@@ -62,6 +62,10 @@ class ChannelIoFlutter {
     return await _channel.invokeMethod('showMessenger');
   }
 
+  static Future<bool> hideMessenger() async {
+    return await _channel.invokeMethod('hideMessenger');
+  }
+
   static Future<bool> isBooted() async {
     return await _channel.invokeMethod('isBooted');
   }
