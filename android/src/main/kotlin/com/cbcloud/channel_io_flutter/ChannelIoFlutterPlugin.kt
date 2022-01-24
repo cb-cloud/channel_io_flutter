@@ -34,8 +34,8 @@ class ChannelIoFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, "com.cbcloud/channel_io_flutter")
     channel.setMethodCallHandler(this)
 
-    val unreadEventChannel = EventChannel(flutterPluginBinding.binaryMessenger, ChannelIoFlutterPluginListener.EVENT_CHANNEL)
-    unreadEventChannel.setStreamHandler(channelIoFlutterPluginListener)
+    val eventChannel = EventChannel(flutterPluginBinding.binaryMessenger, ChannelIoFlutterPluginListener.EVENT_CHANNEL)
+    eventChannel.setStreamHandler(channelIoFlutterPluginListener)
 
     context = flutterPluginBinding.applicationContext
 
@@ -55,6 +55,9 @@ class ChannelIoFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
         }
         "showMessenger" -> {
           showMessenger(result)
+        }
+        "hideMessenger" -> {
+          hideMessenger(result)
         }
         "isBooted" -> {
           isBooted(result)
@@ -166,6 +169,14 @@ class ChannelIoFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
       result.error("UNAVAILABLE", "Channel Talk is not booted", null)
     }
     ChannelIO.showMessenger(activity)
+    result.success(true)
+  }
+
+  private fun hideMessenger(result: Result) {
+    if (!ChannelIO.isBooted()) {
+      result.error("UNAVAILABLE", "Channel Talk is not booted", null)
+    }
+    ChannelIO.hideMessenger()
     result.success(true)
   }
 
