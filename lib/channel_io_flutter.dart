@@ -5,8 +5,10 @@ import 'package:flutter/services.dart';
 class ChannelIoFlutter {
   static const MethodChannel _channel =
       const MethodChannel('com.cbcloud/channel_io_flutter');
-  static const EventChannel _eventChannel =
-      const EventChannel('com.cbcloud/channel_io_flutter/event');
+  static const EventChannel _unreadEventChannel =
+      const EventChannel('com.cbcloud/channel_io_flutter/unread');
+  static const EventChannel _onUrlClickedEventChannel =
+      const EventChannel('com.cbcloud/channel_io_flutter/on_url_clicked');
 
   static Stream<Uri?>? _onUrlClicked;
   static Stream<dynamic>? _unreadStream;
@@ -16,10 +18,11 @@ class ChannelIoFlutter {
     return version;
   }
 
-  static Stream<Uri?> get onUrlClicked => _onUrlClicked ??= _eventChannel
-      .receiveBroadcastStream('onUrlClicked')
-      .where((event) => event is String)
-      .map((event) => Uri.tryParse(event));
+  static Stream<Uri?> get onUrlClicked =>
+      _onUrlClicked ??= _onUrlClickedEventChannel
+          .receiveBroadcastStream()
+          .where((event) => event is String)
+          .map((event) => Uri.tryParse(event));
 
   static Future<bool> boot({
     required String pluginKey,
@@ -116,6 +119,6 @@ class ChannelIoFlutter {
   }
 
   static Stream<dynamic> getUnreadStream() {
-    return _unreadStream ??= _eventChannel.receiveBroadcastStream('unread');
+    return _unreadStream ??= _unreadEventChannel.receiveBroadcastStream();
   }
 }
