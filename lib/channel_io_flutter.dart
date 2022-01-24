@@ -18,6 +18,7 @@ class ChannelIoFlutter {
 
   static Stream<Uri?> get onUrlClicked => _onUrlClicked ??= _eventChannel
       .receiveBroadcastStream('onUrlClicked')
+      .where((event) => event is String)
       .map((event) => Uri.tryParse(event));
 
   static Future<bool> boot({
