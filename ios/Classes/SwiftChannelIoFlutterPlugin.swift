@@ -28,8 +28,11 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
         registrar.addMethodCallDelegate(plugin, channel: methodChannel)
         registrar.addApplicationDelegate(plugin)
         
-        let eventChannel = FlutterEventChannel(name: "com.cbcloud/channel_io_flutter/event", binaryMessenger: registrar.messenger())
-        eventChannel.setStreamHandler(channelIoFlutterPluginHandler)
+        let unreadEvent = FlutterEventChannel(name: "com.cbcloud/channel_io_flutter/unread", binaryMessenger: registrar.messenger())
+        unreadEvent.setStreamHandler(channelIoFlutterPluginHandler.unreadStreamHandler)
+        
+        let onUrlClickedEvent = FlutterEventChannel(name: "com.cbcloud/channel_io_flutter/on_url_clicked", binaryMessenger: registrar.messenger())
+        onUrlClickedEvent.setStreamHandler(channelIoFlutterPluginHandler.onUrlClickedStreamHandler)
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
