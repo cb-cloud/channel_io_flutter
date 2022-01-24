@@ -41,7 +41,7 @@ public class SwiftChannelIoFlutterPluginHandler: NSObject, ChannelPluginDelegate
 extension SwiftChannelIoFlutterPluginHandler: FlutterStreamHandler {
     public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
         guard let channel = arguments as? String else {
-            return FlutterError(code: "NOT_IMPLEMENTED", message: "Specified event channel is not implemented.", details: nil)
+            return FlutterError(code: "NOT_IMPLEMENTED", message: "EventChannel arguments must be specified.", details: nil)
         }
         
         switch(channel) {
@@ -58,7 +58,7 @@ extension SwiftChannelIoFlutterPluginHandler: FlutterStreamHandler {
     
     public func onCancel(withArguments arguments: Any?) -> FlutterError? {
         guard let channel = arguments as? String else {
-            return FlutterError(code: "NOT_IMPLEMENTED", message: "Specified event channel is not implemented.", details: nil)
+            return FlutterError(code: "NOT_IMPLEMENTED", message: "EventChannel arguments must be specified.", details: nil)
         }
         
         switch(channel) {
