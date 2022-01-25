@@ -11,20 +11,22 @@ import ChannelIOFront
 
 public class SwiftChannelIoFlutterPluginHandler: NSObject, ChannelPluginDelegate {
     
-    private var eventSink: FlutterEventSink?
+    public let unreadStreamHandler: ChannelIoStreamHandler = ChannelIoStreamHandler()
+    public let onUrlClickedStreamHandler: ChannelIoStreamHandler = ChannelIoStreamHandler()
     
     public func sendBadge(count: Int) {
-        eventSink?(count)
+        unreadStreamHandler.add(count)
     }
 
     public func onUrlClicked(url: URL) -> Bool {
-        return false
+        onUrlClickedStreamHandler.add(url.absoluteString)
+        return onUrlClickedStreamHandler.isListened()
     }
     
     public func onProfileChanged(key: String, value: Any?) {}
     
     public func onBadgeChanged(count: Int) {
-        eventSink?(count)
+        unreadStreamHandler.add(count)
     }
     
     public func onHideMessenger() {}
@@ -36,7 +38,17 @@ public class SwiftChannelIoFlutterPluginHandler: NSObject, ChannelPluginDelegate
     public func onChatCreated(chatId: String) {}
 }
 
-extension SwiftChannelIoFlutterPluginHandler: FlutterStreamHandler {
+public class ChannelIoStreamHandler: NSObject, FlutterStreamHandler {
+    private var eventSink: FlutterEventSink?
+    
+    public func add(_ argument: Any) {
+        eventSink?(argument)
+    }
+    
+    public func isListened() -> Bool {
+        return eventSink != nil
+    }
+
     public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
         eventSink = events
         return nil

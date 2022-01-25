@@ -5,13 +5,24 @@ import 'package:flutter/services.dart';
 class ChannelIoFlutter {
   static const MethodChannel _channel =
       const MethodChannel('com.cbcloud/channel_io_flutter');
-  static const EventChannel _unreadChannel =
+  static const EventChannel _unreadEventChannel =
       const EventChannel('com.cbcloud/channel_io_flutter/unread');
+  static const EventChannel _onUrlClickedEventChannel =
+      const EventChannel('com.cbcloud/channel_io_flutter/on_url_clicked');
+
+  static Stream<Uri?>? _onUrlClicked;
+  static Stream<dynamic>? _unreadStream;
 
   static Future<String> get platformVersion async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
     return version;
   }
+
+  static Stream<Uri?> get onUrlClicked =>
+      _onUrlClicked ??= _onUrlClickedEventChannel
+          .receiveBroadcastStream()
+          .where((event) => event is String)
+          .map((event) => Uri.tryParse(event));
 
   static Future<bool> boot({
     required String pluginKey,
@@ -53,6 +64,10 @@ class ChannelIoFlutter {
 
   static Future<bool> showMessenger() async {
     return await _channel.invokeMethod('showMessenger');
+  }
+
+  static Future<bool> hideMessenger() async {
+    return await _channel.invokeMethod('hideMessenger');
   }
 
   static Future<bool> isBooted() async {
@@ -104,6 +119,6 @@ class ChannelIoFlutter {
   }
 
   static Stream<dynamic> getUnreadStream() {
-    return _unreadChannel.receiveBroadcastStream();
+    return _unreadStream ??= _unreadEventChannel.receiveBroadcastStream();
   }
 }

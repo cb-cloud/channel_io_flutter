@@ -10,6 +10,7 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
         case boot
         case shutdown
         case showMessenger
+        case hideMessenger
         case isBooted
         case setDebugMode
         case initPushToken
@@ -27,8 +28,11 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
         registrar.addMethodCallDelegate(plugin, channel: methodChannel)
         registrar.addApplicationDelegate(plugin)
         
-        let unreadEventChannel = FlutterEventChannel(name: "com.cbcloud/channel_io_flutter/unread", binaryMessenger: registrar.messenger())
-        unreadEventChannel.setStreamHandler(channelIoFlutterPluginHandler)
+        let unreadEvent = FlutterEventChannel(name: "com.cbcloud/channel_io_flutter/unread", binaryMessenger: registrar.messenger())
+        unreadEvent.setStreamHandler(channelIoFlutterPluginHandler.unreadStreamHandler)
+        
+        let onUrlClickedEvent = FlutterEventChannel(name: "com.cbcloud/channel_io_flutter/on_url_clicked", binaryMessenger: registrar.messenger())
+        onUrlClickedEvent.setStreamHandler(channelIoFlutterPluginHandler.onUrlClickedStreamHandler)
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -39,6 +43,8 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
             shutdown(call, result)
         case .showMessenger:
             showMessenger(call, result)
+        case .hideMessenger:
+            hideMessenger(call, result)
         case .isBooted:
             isBooted(call, result)
         case .setDebugMode:
@@ -129,6 +135,11 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
     
     private func showMessenger(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         ChannelIO.showMessenger()
+        result(true)
+    }
+    
+    private func hideMessenger(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        ChannelIO.hideMessenger()
         result(true)
     }
     
