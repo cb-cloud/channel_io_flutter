@@ -34,8 +34,11 @@ class ChannelIoFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, "com.cbcloud/channel_io_flutter")
     channel.setMethodCallHandler(this)
 
-    val eventChannel = EventChannel(flutterPluginBinding.binaryMessenger, ChannelIoFlutterPluginListener.EVENT_CHANNEL)
-    eventChannel.setStreamHandler(channelIoFlutterPluginListener)
+    val unreadEvent = EventChannel(flutterPluginBinding.binaryMessenger, ChannelIoFlutterPluginListener.UNREAD_EVENT_CHANNEL)
+    unreadEvent.setStreamHandler(channelIoFlutterPluginListener.unreadEventHandler)
+
+    val urlClickEvent = EventChannel(flutterPluginBinding.binaryMessenger, ChannelIoFlutterPluginListener.ON_URL_CLICKED_EVENT_CHANNEL)
+    urlClickEvent.setStreamHandler(channelIoFlutterPluginListener.onUrlClickEventHandler)
 
     context = flutterPluginBinding.applicationContext
 

@@ -5,41 +5,18 @@ import com.zoyi.channel.plugin.android.open.model.PopupData
 import io.flutter.plugin.common.EventChannel
 import java.lang.IllegalArgumentException
 
-class ChannelIoFlutterPluginListener : ChannelPluginListener, EventChannel.StreamHandler {
+class ChannelIoFlutterPluginListener : ChannelPluginListener {
 
     companion object {
-        const val EVENT_CHANNEL = "com.cbcloud/channel_io_flutter/event"
+        const val UNREAD_EVENT_CHANNEL = "com.cbcloud/channel_io_flutter/unread"
+        const val ON_URL_CLICKED_EVENT_CHANNEL = "com.cbcloud/channel_io_flutter/on_url_clicked"
     }
 
-    // EventChannel.StreamHandler
-
-    private var mUnreadEventSink: EventChannel.EventSink? = null
-    private var mOnUrlClickEventSink: EventChannel.EventSink? = null
+    val unreadEventHandler: ChannelIoStreamHandler = ChannelIoStreamHandler()
+    val onUrlClickEventHandler: ChannelIoStreamHandler = ChannelIoStreamHandler()
 
     fun sendBadge(p0: Int) {
-        mUnreadEventSink?.success(p0)
-    }
-
-    override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
-        if (arguments == null) {
-            throw IllegalArgumentException("EventChannel arguments must be specified.")
-        }
-
-        when (arguments) {
-            "unread" -> mUnreadEventSink = events
-            "onUrlClicked" -> mOnUrlClickEventSink = events
-        }
-    }
-
-    override fun onCancel(arguments: Any?) {
-        if (arguments == null) {
-            throw IllegalArgumentException("EventChannel arguments must be specified.")
-        }
-
-        when (arguments) {
-            "unread" -> mUnreadEventSink = null
-            "onUrlClicked" -> mOnUrlClickEventSink = null
-        }
+        unreadEventHandler.mEventSink?.success(p0)
     }
 
     // ChannelPluginListener
@@ -47,14 +24,14 @@ class ChannelIoFlutterPluginListener : ChannelPluginListener, EventChannel.Strea
     override fun onUrlClicked(p0: String?): Boolean {
         if (p0 == null) return false
 
-        mOnUrlClickEventSink?.success(p0)
+        onUrlClickEventHandler.mEventSink?.success(p0)
         return true
     }
 
     override fun onProfileChanged(p0: String?, p1: Any?) {}
 
     override fun onBadgeChanged(p0: Int) {
-        mUnreadEventSink?.success(p0)
+        unreadEventHandler.mEventSink?.success(p0)
     }
 
     override fun onHideMessenger() {}
@@ -68,4 +45,18 @@ class ChannelIoFlutterPluginListener : ChannelPluginListener, EventChannel.Strea
     override fun onPopupDataReceived(p0: PopupData?) {}
 
     override fun onChatCreated(p0: String?) {}
+}
+
+class ChannelIoStreamHandler : EventChannel.StreamHandler {
+
+    var mEventSink: EventChannel.EventSink? = null
+        private set
+
+    override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
+        mEventSink = events
+    }
+
+    override fun onCancel(arguments: Any?) {
+        mEventSink = null
+    }
 }
