@@ -20,7 +20,7 @@ public class SwiftChannelIoFlutterPluginHandler: NSObject, ChannelPluginDelegate
 
     public func onUrlClicked(url: URL) -> Bool {
         onUrlClickedStreamHandler.add(url.absoluteString)
-        return true
+        return onUrlClickedStreamHandler.isListened()
     }
     
     public func onProfileChanged(key: String, value: Any?) {}
@@ -45,6 +45,10 @@ public class ChannelIoStreamHandler: NSObject, FlutterStreamHandler {
         eventSink?(argument)
     }
     
+    public func isListened() -> Bool {
+        return eventSink != nil
+    }
+
     public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
         eventSink = events
         return nil

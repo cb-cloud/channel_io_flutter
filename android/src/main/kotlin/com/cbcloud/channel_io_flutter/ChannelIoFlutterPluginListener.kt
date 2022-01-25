@@ -16,7 +16,7 @@ class ChannelIoFlutterPluginListener : ChannelPluginListener {
     val onUrlClickEventHandler: ChannelIoStreamHandler = ChannelIoStreamHandler()
 
     fun sendBadge(p0: Int) {
-        unreadEventHandler.mEventSink?.success(p0)
+        unreadEventHandler.eventSink?.success(p0)
     }
 
     // ChannelPluginListener
@@ -24,14 +24,14 @@ class ChannelIoFlutterPluginListener : ChannelPluginListener {
     override fun onUrlClicked(p0: String?): Boolean {
         if (p0 == null) return false
 
-        onUrlClickEventHandler.mEventSink?.success(p0)
-        return true
+        onUrlClickEventHandler.eventSink?.success(p0)
+        return onUrlClickEventHandler.isListened()
     }
 
     override fun onProfileChanged(p0: String?, p1: Any?) {}
 
     override fun onBadgeChanged(p0: Int) {
-        unreadEventHandler.mEventSink?.success(p0)
+        unreadEventHandler.eventSink?.success(p0)
     }
 
     override fun onHideMessenger() {}
@@ -49,14 +49,18 @@ class ChannelIoFlutterPluginListener : ChannelPluginListener {
 
 class ChannelIoStreamHandler : EventChannel.StreamHandler {
 
-    var mEventSink: EventChannel.EventSink? = null
+    var eventSink: EventChannel.EventSink? = null
         private set
 
+    fun isListened(): Boolean {
+        return eventSink != null
+    }
+
     override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
-        mEventSink = events
+        eventSink = events
     }
 
     override fun onCancel(arguments: Any?) {
-        mEventSink = null
+        eventSink = null
     }
 }
