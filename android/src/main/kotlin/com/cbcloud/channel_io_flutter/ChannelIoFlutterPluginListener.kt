@@ -28,7 +28,7 @@ class ChannelIoFlutterPluginListener : ChannelPluginListener {
         return onUrlClickEventHandler.isListened()
     }
 
-    override fun onProfileChanged(p0: String?, p1: Any?) {}
+    override fun onFollowUpChanged(p0: Map<String, String>) {}
 
     override fun onBadgeChanged(p0: Int) {
         unreadEventHandler.eventSink?.success(p0)
