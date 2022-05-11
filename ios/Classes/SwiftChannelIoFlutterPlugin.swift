@@ -20,6 +20,9 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
         case hasStoredPushNotification
         case openStoredPushNotification
         case addTags
+        case setPage
+        case resetPage
+        case openChat
     }
 
     public static func register(with registrar: FlutterPluginRegistrar) {
@@ -63,6 +66,12 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
             openStoredPushNotification(call, result)
         case .addTags:
             addTags(call, result)
+        case .setPage:
+            setPage(call, result)
+        case .resetPage:
+            resetPage(call, result)
+        case .openChat:
+            openChat(call, result)
         }
     }
     
@@ -224,5 +233,30 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
                 result(false)
             }
         }
+    }
+
+    private func setPage(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        guard let argMaps = call.arguments as? Dictionary<String, Any>,
+              let page = argMaps["page"] as? String else {
+            result(FlutterError(code: call.method, message: "Missing argument", details: nil))
+            return
+        }
+
+        ChannelIO.setPage(page)
+        result(true)
+    }
+
+    private func resetPage(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        ChannelIO.resetPage()
+        result(true)
+    }
+
+    private func openChat(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let argMaps = call.arguments as? Dictionary<String, Any>
+        let chatId = argMaps?["chatId"] as? String
+        let message = argMaps?["message"] as? String
+
+        ChannelIO.openChat(with: chatId, message: message)
+        result(true)
     }
 }
