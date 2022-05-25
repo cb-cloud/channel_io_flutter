@@ -46,6 +46,6 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "io.channel:plugin-android:10.0.1"
+    implementation "io.channel:plugin-android:10.0.3"
     implementation "com.google.firebase:firebase-messaging:20.1.0"
 }
