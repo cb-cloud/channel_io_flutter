@@ -23,7 +23,7 @@ public class SwiftChannelIoFlutterPluginHandler: NSObject, ChannelPluginDelegate
         return onUrlClickedStreamHandler.isListened()
     }
     
-    public func onProfileChanged(key: String, value: Any?) {}
+    public func onFollowChanged(key: String, value: Any?) {}
     
     public func onBadgeChanged(count: Int) {
         unreadStreamHandler.add(count)
