@@ -25,7 +25,7 @@ public class SwiftChannelIoFlutterPluginHandler: NSObject, ChannelPluginDelegate
     
     public func onFollowChanged(key: String, value: Any?) {}
     
-    public func onBadgeChanged(unread: Int, alert: In) {
+    public func onBadgeChanged(unread: Int, alert: Int) {
         unreadStreamHandler.add(unread)
     }
     
