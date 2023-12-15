@@ -77,7 +77,7 @@ class _MyAppState extends State<MyApp> {
                         _showMessageDialog(
                             'PlatformException: ${error.message}');
                       } catch (err) {
-                        _showMessageDialog(err.message);
+                        _showMessageDialog(err.toString());
                       }
                     },
                   );
@@ -93,7 +93,7 @@ class _MyAppState extends State<MyApp> {
                   } on PlatformException catch (error) {
                     _showMessageDialog('PlatformException: ${error.message}');
                   } catch (err) {
-                    _showMessageDialog(err.message);
+                    _showMessageDialog(err.toString());
                   }
                 },
                 child: Text('shutdown'),
@@ -107,7 +107,7 @@ class _MyAppState extends State<MyApp> {
                   } on PlatformException catch (error) {
                     _showMessageDialog('PlatformException: ${error.message}');
                   } catch (err) {
-                    _showMessageDialog(err.message);
+                    _showMessageDialog(err.toString());
                   }
                 },
                 child: Text('showMessenger'),
@@ -125,7 +125,7 @@ class _MyAppState extends State<MyApp> {
                   } on PlatformException catch (error) {
                     _showMessageDialog('PlatformException: ${error.message}');
                   } catch (err) {
-                    _showMessageDialog(err.message);
+                    _showMessageDialog(err.toString());
                   }
                 },
                 child: Text('isBooted'),
@@ -152,7 +152,7 @@ class _MyAppState extends State<MyApp> {
                         _showMessageDialog(
                             'PlatformException: ${error.message}');
                       } catch (err) {
-                        _showMessageDialog(err.message);
+                        _showMessageDialog(err.toString());
                       }
                     },
                   );
