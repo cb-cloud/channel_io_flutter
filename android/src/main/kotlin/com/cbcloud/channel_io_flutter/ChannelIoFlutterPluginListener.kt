@@ -30,6 +30,10 @@ class ChannelIoFlutterPluginListener : ChannelPluginListener {
 
     override fun onFollowUpChanged(p0: Map<String, String>) {}
 
+    override fun onBadgeChanged(p0: Int) {
+        unreadEventHandler.eventSink?.success(p0)
+    }
+
     override fun onBadgeChanged(p0: Int, p1: Int) {
         unreadEventHandler.eventSink?.success(p0)
     }
