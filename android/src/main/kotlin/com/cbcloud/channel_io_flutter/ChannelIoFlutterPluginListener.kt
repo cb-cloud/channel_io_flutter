@@ -11,7 +11,7 @@ class ChannelIoFlutterPluginListener : ChannelPluginListener {
         const val UNREAD_EVENT_CHANNEL = "com.cbcloud/channel_io_flutter/unread"
         const val ON_URL_CLICKED_EVENT_CHANNEL = "com.cbcloud/channel_io_flutter/on_url_clicked"
     }
-
+ 
     val unreadEventHandler: ChannelIoStreamHandler = ChannelIoStreamHandler()
     val onUrlClickEventHandler: ChannelIoStreamHandler = ChannelIoStreamHandler()
 
@@ -30,8 +30,8 @@ class ChannelIoFlutterPluginListener : ChannelPluginListener {
 
     override fun onFollowUpChanged(p0: Map<String, String>) {}
 
-    override fun onBadgeChanged(unread: Int, alert: Int) {
-        unreadEventHandler.eventSink?.success(unread)
+    override fun onBadgeChanged(p0: Int) {
+        unreadEventHandler.eventSink?.success(p0)
     }
 
     override fun onHideMessenger() {}
