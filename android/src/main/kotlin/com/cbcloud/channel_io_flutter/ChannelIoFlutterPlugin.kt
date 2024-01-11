@@ -89,6 +89,9 @@ class ChannelIoFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
         "addTags" -> {
           addTags(call, result)
         }
+        "openChat" -> {
+          openChat(call, result)
+        }
         else -> {
           result.notImplemented()
         }
@@ -264,4 +267,21 @@ class ChannelIoFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
       }
     }
   }
+
+  private fun openChat(call: MethodCall, result: Result) {
+    val chatId = call.argument<String>("chatId")
+    if (chatId == null) {
+      result.error("UNAVAILABLE", "Missing argument(chatId)", null)
+      return
+    }
+    ChannelIO.openChat(chatId: chatId) { e, user ->
+      if (user != null) {
+        result.success(true)
+      } else {
+        result.error("ERROR", "Execution failed(chatId)", e)
+      }
+    }
+  }
+
+
 }

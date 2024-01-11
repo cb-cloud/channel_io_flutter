@@ -118,6 +118,14 @@ class ChannelIoFlutter {
     });
   }
 
+  static Future<bool> openChat({
+    required String chatId,
+  }) async {
+    return await _channel.invokeMethod('openChat', {
+      'chatId': chatId,
+    });
+  }
+
   static Stream<dynamic> getUnreadStream() {
     return _unreadStream ??= _unreadEventChannel.receiveBroadcastStream();
   }
