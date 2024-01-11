@@ -249,6 +249,8 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
             result(FlutterError(code: call.method, message: "Missing argument", details: nil))
             return
         }
+        ChannelIO.setPage("SUPPORT_BOT_PAGE")
+        ChannelIO.track(eventName: "SUPPORT_BOT", eventProperty: nil)
 
         ChannelIO.openSupportBot(with: supportBotId, message: nil) 
         result(true)
