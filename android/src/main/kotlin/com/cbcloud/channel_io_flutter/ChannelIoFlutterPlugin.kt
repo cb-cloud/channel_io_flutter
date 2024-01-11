@@ -287,7 +287,7 @@ class ChannelIoFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
       result.error("UNAVAILABLE", "Missing argument(supportBotId)", null)
       return
     }
-    ChannelIO.openSupportBot(supportBotId, null) 
+    ChannelIO.openSupportBot(activity, supportBotId, null) 
     result.success(true)
   }
 
