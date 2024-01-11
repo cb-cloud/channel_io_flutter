@@ -274,7 +274,7 @@ class ChannelIoFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
       result.error("UNAVAILABLE", "Missing argument(chatId)", null)
       return
     }
-    ChannelIO.openChat(activity, chatId) 
+    ChannelIO.openChat(activity, chatId, null) 
     result.success(true)
   }
 
