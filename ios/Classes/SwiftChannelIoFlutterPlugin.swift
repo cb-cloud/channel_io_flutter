@@ -250,7 +250,7 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
             return
         }
 
-        ChannelIO.openSupportBot(with: chatId, message: nil) 
+        ChannelIO.openSupportBot(with: supportBotId, message: nil) 
         result(true)
     }
 
