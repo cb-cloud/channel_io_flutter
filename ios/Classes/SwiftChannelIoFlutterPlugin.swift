@@ -231,18 +231,13 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
 
     private func openChat(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         guard let argMaps = call.arguments as? Dictionary<String, Any>,
-              let chatId = argMaps["chatId"] as? [String] else {
+              let chatId = argMaps["chatId"] as? String else {
             result(FlutterError(code: call.method, message: "Missing argument", details: nil))
             return
         }
 
-        ChannelIO.openChat(with: chatId) { (_, user) in
-            if let _ = user {
-                result(true)
-            } else {
-                result(false)
-            }
-        }
+        ChannelIO.openChat(with: chatId) 
+        result(true)
     }
 
 
