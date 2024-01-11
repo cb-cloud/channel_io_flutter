@@ -126,6 +126,14 @@ class ChannelIoFlutter {
     });
   }
 
+  static Future<bool> openSupportBot({
+    required String supportBotId,
+  }) async {
+    return await _channel.invokeMethod('openSupportBot', {
+      'supportBotId': supportBotId,
+    });
+  }
+
   static Stream<dynamic> getUnreadStream() {
     return _unreadStream ??= _unreadEventChannel.receiveBroadcastStream();
   }

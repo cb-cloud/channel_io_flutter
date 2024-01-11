@@ -66,6 +66,8 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
             addTags(call, result)
         case .openChat:
             openChat(call, result)
+        case .openSupportBot:
+            openSupportBot(call, result)
         }
     }
     
@@ -237,6 +239,17 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
         }
 
         ChannelIO.openChat(with: chatId, message: nil) 
+        result(true)
+    }
+
+    private func openSupportBot(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        guard let argMaps = call.arguments as? Dictionary<String, Any>,
+              let supportBotId = argMaps["supportBotId"] as? String else {
+            result(FlutterError(code: call.method, message: "Missing argument", details: nil))
+            return
+        }
+
+        ChannelIO.openSupportBot(with: chatId, message: nil) 
         result(true)
     }
 
