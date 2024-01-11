@@ -21,6 +21,7 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
         case openStoredPushNotification
         case addTags
         case openChat
+        case openSupportBot
     }
 
     public static func register(with registrar: FlutterPluginRegistrar) {
