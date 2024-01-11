@@ -236,7 +236,7 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
             return
         }
 
-        ChannelIO.openChat(with: chatId) 
+        ChannelIO.openChat(with: chatId, message: nil) 
         result(true)
     }
 
