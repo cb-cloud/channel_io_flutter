@@ -92,6 +92,9 @@ class ChannelIoFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
         "openChat" -> {
           openChat(call, result)
         }
+        "openSupportBot" -> {
+          openSupportBot(call, result)
+        }
         else -> {
           result.notImplemented()
         }
@@ -275,6 +278,16 @@ class ChannelIoFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
       return
     }
     ChannelIO.openChat(activity, chatId, null) 
+    result.success(true)
+  }
+
+  private fun openSupportBot(call: MethodCall, result: Result) {
+    val supportBotId = call.argument<String>("supportBotId")
+    if (supportBotId == null) {
+      result.error("UNAVAILABLE", "Missing argument(supportBotId)", null)
+      return
+    }
+    ChannelIO.openSupportBot(activity, supportBotId, null) 
     result.success(true)
   }
 
