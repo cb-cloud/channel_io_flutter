@@ -20,6 +20,8 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
         case hasStoredPushNotification
         case openStoredPushNotification
         case addTags
+        case openChat
+        case openSupportBot
     }
 
     public static func register(with registrar: FlutterPluginRegistrar) {
@@ -63,6 +65,10 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
             openStoredPushNotification(call, result)
         case .addTags:
             addTags(call, result)
+        case .openChat:
+            openChat(call, result)
+        case .openSupportBot:
+            openSupportBot(call, result)
         }
     }
     
@@ -225,4 +231,28 @@ public class SwiftChannelIoFlutterPlugin: NSObject, FlutterPlugin {
             }
         }
     }
+
+    private func openChat(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        guard let argMaps = call.arguments as? Dictionary<String, Any>,
+              let chatId = argMaps["chatId"] as? String else {
+            result(FlutterError(code: call.method, message: "Missing argument", details: nil))
+            return
+        }
+
+        ChannelIO.openChat(with: chatId, message: nil) 
+        result(true)
+    }
+
+    private func openSupportBot(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        guard let argMaps = call.arguments as? Dictionary<String, Any>,
+              let supportBotId = argMaps["supportBotId"] as? String else {
+            result(FlutterError(code: call.method, message: "Missing argument", details: nil))
+            return
+        }
+
+        ChannelIO.openSupportBot(with: supportBotId, message: nil) 
+        result(true)
+    }
+
+
 }
