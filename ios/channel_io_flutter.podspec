@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'channel_io_flutter'
-  s.version          = '0.0.18'
+  s.version          = '0.0.19'
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC
 A new flutter plugin project.
@@ -15,7 +15,7 @@ A new flutter plugin project.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'ChannelIOSDK'
+  s.dependency 'ChannelIOSDK','11.6.0'
   s.platform = :ios, '8.0'
 
   # Flutter.framework does not contain a i386 slice.
